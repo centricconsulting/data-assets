@@ -4,7 +4,7 @@ This repository contains datasets, scripts and other assets used to develop Data
 
 ## Finding Content
 
-Data is organized into major groups such as Time, Geography and Organization.  Each is major group is represented by a top-level folder in the repository.
+Data is organized into major groups such as Time, Geography and Organization.  Each major group is represented by a top-level folder in the repository.
 
 ## Submitting Content
 
