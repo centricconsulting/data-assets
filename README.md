@@ -2,10 +2,14 @@
 
 This repository contains datasets, scripts and other assets used to develop Data & Analytics solutions.
 
-## Finding Content
+## Datasets
 
-Data is organized into major groups such as Time, Geography and Organization.  Each major group is represented by a top-level folder in the repository.
+Datasets are organized into major groups such as Time, Geography and Organization.  Within each you can find data files and/or generative scripts to provide actual data.
 
-## Submitting Content
+## Utility
 
-Please submit any new content to Jeff Kanel (jeff.kanel@centricconsulting.com).
+Utility contains scripts that can be applied for a variety of functional purposes in your solutions, ranging from data management to verifying data quality.
+
+# Submitting Content
+
+Please submit any new content ideas to Jeff Kanel (jeff.kanel@centricconsulting.com).
