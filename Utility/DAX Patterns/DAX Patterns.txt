@@ -1,0 +1,72 @@
+DAX PATTERNS
+Centric Consulting 2018
+Jeff Kanel
+
+NOTES
+
+1. Please use DAX Formatter (https://www.daxformatter.com/) to format the formulations.
+
+2. Many of these formulas assume that there is a Centric Calendar dimension with "index" columns
+   that can be used to time series analysis.  Using the index columns is preferable to built-in
+   DAX functions such as PREVIOUSYEAR or YTD, mainly because the latter cannot support fiscal
+   calendars.
+
+/* ################################################################################ */
+
+PATTERN
+--------------
+Balance
+
+DESCRIPTION
+--------------
+Given a balance amount that is restated on multiple dates,
+keep that balance in effect until the next balance amount is stated.
+
+COMMENTS
+--------------
+When an account balance goes to zero, it is recommended to create
+a source table record with a NULL acccount_balance_amount rather than a Zero.
+Otherwise the zeroed account will appear in all future results.
+
+FORMULATION
+--------------
+Account Balance :=
+CALCULATE (
+    CALCULATE (
+        SUM ( [account_balance_amount] ),
+        LASTNONBLANK ( Calendar[date_key], CALCULATE ( SUM ( [account_balance_amount] ) ) )
+    ),
+    FILTER ( ALL ( Calendar ), Calendar[date_key] <= MAX ( Calendar[date_key] ) )
+)
+
+/* ################################################################################ */
+
+PATTERN
+--------------
+PYTD (Prior Year To Date)
+
+Note: Similar pattern for PMTD, PQTD, etc.
+Note: 
+
+DESCRIPTION
+--------------
+Given a period bounded by dates d1 and d2,
+where d2 identifies a day-of-year (index),
+calculate an amount from the beginning of the prior year
+through the equivalent day-of-year (index)
+
+COMMENTS
+--------------
+A similar pattern can be applied to PMTD, PQTD, etc.
+
+FORMULATION
+--------------
+
+Sales PYTD :=
+CALCULATE (
+    SUM ( Sales.[sales_amount] ),
+    ALL ( Calendar ),
+    Calendar.[year_index]
+        = MAX ( Calendar.[year_index] ) - 1,
+    Calendar.[day_of_year_index] <= MAX ( Calendar.[day_of_year_index] )
+)
