@@ -70,3 +70,33 @@ CALCULATE (
         = MAX ( Calendar.[year_index] ) - 1,
     Calendar.[day_of_year_index] <= MAX ( Calendar.[day_of_year_index] )
 )
+
+/* ################################################################################ */
+
+PATTERN
+--------------
+Rolling Sum or Average
+
+Note: Similar pattern for PMTD, PQTD, etc.
+Note: 
+
+DESCRIPTION
+--------------
+Given a period bounded by dates d1 and d2,
+where d2 identifies a day-of-year (index),
+calculate an amount from 90 days prior to d2.
+
+COMMENTS
+--------------
+A similar pattern can be applied to PMTD, PQTD, etc.
+
+FORMULATION
+--------------
+
+Sales 90Day Roll :=
+CALCULATE (
+    DIVIDE(SUM ( Sales.[sales_amount] ), 30),
+    ALL ( Calendar ),
+    AND(Calendar.[day_index] <= MAX ( Calendar.[day_index] )
+    , Calendar.[day_index] >= MAX ( Calendar.[day_index] ) - 90)
+)
