@@ -100,3 +100,35 @@ CALCULATE (
     AND(Calendar.[day_index] <= MAX ( Calendar.[day_index] )
     , Calendar.[day_index] >= MAX ( Calendar.[day_index] ) - 90)
 )
+
+
+
+/* ################################################################################ */
+
+PATTERN
+--------------
+Count between two dates.
+
+
+DESCRIPTION
+--------------
+Given a table with date ranges, count the number of days corresponding to the context in the Calendar table.
+
+COMMENTS
+--------------
+https://powerpivotpro.com/2013/04/counting-active-rows-in-a-time-period-guest-post-from-chris-campbell/
+
+FORMULATION
+--------------
+
+In-Force Policies :=
+CALCULATE (
+    DISTINCTCOUNT ( 'Policy Life'[inforce_policy_key] ),
+    FILTER (
+        'Policy Life',
+        (
+            [begin_effect_date_key] <= LASTDATE ( Calendar[date_key] )
+                && [end_effect_date_key >= FIRSTDATE(Calendar[date_key]
+        )
+    )
+)
